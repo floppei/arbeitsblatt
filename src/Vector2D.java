@@ -101,7 +101,7 @@ public class Vector2D extends AbstractController {
         ptool.setColor(Color.RED);
         ptool.addLine((int) (vec1.getX()), (int) vec1.getY(), (int) vec2.getX(), (int) vec2.getY());
         Vector2D test = new Vector2D(0,0);
-        this.rec(30,0,30,vec1,vec2);
+        this.rec(20,0,30,vec1,vec2);
 
         //ptool.addLine((int)vec1.getX(), (int)vec1.getY(),(int)neu.getX(),(int)neu.getY());
        // ptool.setColor(Color.RED);
@@ -110,7 +110,7 @@ public class Vector2D extends AbstractController {
 
     public void rec (int i_break,int i_depth, int angle, Vector2D vec1, Vector2D vec2){
         Vector2D grundlinie = vec2.minus(vec1);
-        Vector2D gedreht = grundlinie.rotate(-angle).mult(Math.cos(-angle));
+        Vector2D gedreht = grundlinie.rotate(-angle).mult(Math.cos(Math.toRadians(-angle)));
         Vector2D neu = gedreht.plus(vec1);
         ptool.addLine((int) vec1.getX(), (int) vec1.getY(), (int) neu.getX(), (int) neu.getY());
         ptool.addLine((int) vec2.getX(), (int) vec2.getY(), (int) neu.getX(), (int) neu.getY());
@@ -164,8 +164,8 @@ public class Vector2D extends AbstractController {
         this.ptool=ptool;
         switch (button) {
             case 4:
-                Vector2D vec1 = new Vector2D(250,310);
-                Vector2D vec2 = new Vector2D(450,310);
+                Vector2D vec1 = new Vector2D(450,510);
+                Vector2D vec2 = new Vector2D(850,510);
                 int i_depth = 1;
                 drawSimpleFractal1(ptool, vec1,vec2, i_depth);
         }
