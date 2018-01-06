@@ -3,6 +3,7 @@ import DrawableObject;
 import PaintTool;
 */
 import java.awt.*;
+import java.util.Vector;
 
 public class Vector2D extends AbstractController {
     public PaintTool ptool;
@@ -68,14 +69,55 @@ public class Vector2D extends AbstractController {
         return Math.sqrt(length);
     }
 
-    public static void drawSimpleFractal1(PaintTool ptool,Vector2D vec1, Vector2D vec2) {
+    public void drawSimpleFractal1(PaintTool ptool,Vector2D vec1, Vector2D vec2, int i_depth) {
+        /*
+        if (false) {
+            ptool.setColor(Color.RED);
+            //ptool.addLine((int)vec1.getX(), (int)vec1.getY(),(int)vec2.getX(),(int)vec2.getY());
+            ptool.addLine((int) (vec1.getX()), (int) vec1.getY(), 0, 0);
+            ptool.setColor(Color.BLUE);
+            ptool.addLine((int) (vec2.getX()), (int) vec2.getY(), 0, 0);
+            ptool.setColor(Color.BLACK);
+            Vector2D neu = vec1.rotate(-30);
+            neu = neu.mult(Math.cos(-30));
+            ptool.addLine((int) (neu.getX()), (int) neu.getY(), 0, 0);
+
+            //Grundlinie berechnen
+            vec2 = new Vector2D(500.00, 310.00);
+            Vector2D grundlinie = vec2.minus(vec1);
+            ptool.setColor(Color.RED);
+            ptool.addLine((int) (vec1.getX()), (int) vec1.getY(), (int) vec2.getX(), (int) vec2.getY());
+            //ptool.setColor(Color.GREEN);
+            //ptool.addLine(0,0,(int) grundlinie.getX(),(int)grundlinie.getY());
+            Vector2D gedreht = grundlinie.rotate(-45);
+            gedreht = (gedreht.mult(Math.cos(45)));
+            Vector2D neu = gedreht.plus(vec1);
+            ptool.setColor(Color.RED);
+            ptool.addLine((int) vec1.getX(), (int) vec1.getY(), (int) neu.getX(), (int) neu.getY());
+            ptool.addLine((int) vec2.getX(), (int) vec2.getY(), (int) neu.getX(), (int) neu.getY());
+        }
+        */
+
         ptool.setColor(Color.RED);
-        ptool.addLine((int)vec1.getX(), (int)vec1.getY(),(int)vec2.getX(),(int)vec2.getY());
-        Vector2D neu = vec1.constructThirdPoint(vec1,vec2);
-        ptool.setColor(Color.RED);
-        ptool.addLine((int)vec1.getX(), (int)vec1.getY(),(int)neu.getX(),(int)neu.getY());
-        ptool.setColor(Color.RED);
-        ptool.addLine((int)neu.getX(), (int)neu.getY(),(int)vec2.getX(),(int)vec2.getY());
+        ptool.addLine((int) (vec1.getX()), (int) vec1.getY(), (int) vec2.getX(), (int) vec2.getY());
+        Vector2D test = new Vector2D(0,0);
+        this.rec(30,0,30,vec1,vec2);
+
+        //ptool.addLine((int)vec1.getX(), (int)vec1.getY(),(int)neu.getX(),(int)neu.getY());
+       // ptool.setColor(Color.RED);
+       // ptool.addLine((int)neu.getX(), (int)neu.getY(),(int)vec2.getX(),(int)vec2.getY());
+    }
+
+    public void rec (int i_break,int i_depth, int angle, Vector2D vec1, Vector2D vec2){
+        Vector2D grundlinie = vec2.minus(vec1);
+        Vector2D gedreht = grundlinie.rotate(-angle).mult(Math.cos(-angle));
+        Vector2D neu = gedreht.plus(vec1);
+        ptool.addLine((int) vec1.getX(), (int) vec1.getY(), (int) neu.getX(), (int) neu.getY());
+        ptool.addLine((int) vec2.getX(), (int) vec2.getY(), (int) neu.getX(), (int) neu.getY());
+        if (i_depth < i_break){g
+            rec(i_break,i_depth+1,angle,vec1, neu);
+            rec(i_break,i_depth+1,angle, neu, vec2);
+        }
     }
 
     public Vector2D constructThirdPoint(Vector2D vec1, Vector2D vec2) {
@@ -85,9 +127,8 @@ public class Vector2D extends AbstractController {
         neu.mult(Math.cos(30*(-1)));
         neu.plus(vec1);
         return neu;*/
-
         Vector2D neu = vec2.minus(vec1);
-        Vector2D rot = neu.rotate(-30);
+        Vector2D rot = neu.rotate(120);
         neu.vlength();
         neu.mult(Math.cos(30*(-1)));
         neu.mult(neu.vlength());
@@ -125,7 +166,8 @@ public class Vector2D extends AbstractController {
             case 4:
                 Vector2D vec1 = new Vector2D(250,310);
                 Vector2D vec2 = new Vector2D(450,310);
-                drawSimpleFractal1(ptool, vec1,vec2);
+                int i_depth = 1;
+                drawSimpleFractal1(ptool, vec1,vec2, i_depth);
         }
     }
 
