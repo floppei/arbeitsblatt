@@ -114,7 +114,7 @@ public class Vector2D extends AbstractController {
         Vector2D neu = gedreht.plus(vec1);
         ptool.addLine((int) vec1.getX(), (int) vec1.getY(), (int) neu.getX(), (int) neu.getY());
         ptool.addLine((int) vec2.getX(), (int) vec2.getY(), (int) neu.getX(), (int) neu.getY());
-        if (i_depth < i_break){g
+        if (i_depth < i_break){
             rec(i_break,i_depth+1,angle,vec1, neu);
             rec(i_break,i_depth+1,angle, neu, vec2);
         }
